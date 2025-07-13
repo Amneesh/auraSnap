@@ -43,30 +43,21 @@ const Gallery = ({ refreshKey }) => {
   };
 
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20, marginTop: 30 }}>
+    <div className="gallery-grid" style={{ marginTop: 30 }}>
       {media.map((item) => (
         <div key={item.key} style={{ position: 'relative' }}>
           <button
             onClick={() => deleteMedia(item.key)}
-            style={{
-              position: 'absolute',
-              top: 4,
-              right: 4,
-              background: 'rgba(255,0,0,0.8)',
-              border: 'none',
-              color: 'white',
-              padding: '4px 8px',
-              cursor: 'pointer',
-              zIndex: 1,
-              borderRadius: '4px',
-            }}
+            className="delete-button"
+            aria-label={`Delete ${item.title}`}
+            title={`Delete ${item.title}`}
           >
-            ×
+            DELETE 
           </button>
           <img
             src={item.url}
             alt={item.title}
-            style={{ width: 200, height: 'auto', objectFit: 'cover' }}
+            className="gallery-image"
           />
         </div>
       ))}

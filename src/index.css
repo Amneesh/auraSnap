@@ -1,0 +1,265 @@
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+:root {
+  --color-primary: #4A90E2;
+  --color-secondary: #50E3C2;
+  --color-background: #F5F7FA;
+  --color-text-primary: #333333;
+  --color-text-secondary: #666666;
+  --color-border: #E1E8ED;
+  --color-error: #E94B3C;
+
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+  --border-radius: 8px;
+
+  --spacing-xs: 8px;
+  --spacing-sm: 16px;
+  --spacing-md: 24px;
+  --spacing-lg: 32px;
+  --spacing-xl: 48px;
+}
+
+/* Reset */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  margin: 0;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Container */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: var(--spacing-lg);
+}
+
+/* Typography */
+h1, h2, h3, h4 {
+  font-weight: 700;
+  margin-top: 0;
+  color: var(--color-primary);
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: var(--spacing-md);
+}
+
+h2 {
+  font-size: 1.75rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+p {
+  font-weight: 400;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-md);
+}
+
+/* Buttons */
+button {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+  box-shadow: 0 3px 6px rgba(74, 144, 226, 0.4);
+}
+
+button:hover:not(:disabled) {
+  background-color: #357ABD; /* Darker blue */
+}
+
+button:disabled {
+  background-color: #A1C6EA;
+  cursor: not-allowed;
+}
+
+/* Inputs & Textareas */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+  width: 100%;
+  padding: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+  font-size: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  color: var(--color-text-primary);
+  transition: border-color 0.25s ease;
+  font-family: var(--font-family);
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 8px rgba(74, 144, 226, 0.4);
+}
+
+/* Forms */
+form label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--color-text-primary);
+}
+
+/* Error Text */
+.error-text {
+  color: var(--color-error);
+  font-weight: 600;
+  margin-top: -12px;
+  margin-bottom: var(--spacing-md);
+}
+
+/* Upload Form & Gallery Container */
+.upload-container, .gallery-container {
+  background: white;
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Gallery Grid */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-sm);
+}
+
+.gallery-grid img {
+    aspect-ratio: 1/1;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  object-fit: cover;
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.gallery-grid img:hover {
+  filter:grayscale(1);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  .container {
+    padding: var(--spacing-md);
+  }
+}
+/* Delete Button on Image */
+.delete-button {
+  position: absolute;
+  width:100%;
+  bottom: 0;
+  background: rgba(233, 75, 60, 0.85); /* error red with transparency */
+  border: none;
+  color: white;
+  padding: 10px 8px;
+  cursor: pointer;
+  z-index: 1;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1;
+  transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+  background: rgba(233, 75, 60, 1); /* full red on hover */
+}
+
+/* Gallery image (already partially in the style guide, but here with class) */
+.gallery-image {
+  width: 200px;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+
+/* Upload Form Styling */
+.upload-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  background: white;
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  max-width: 400px;
+}
+
+/* Label */
+.upload-label {
+  font-weight: 600;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  text-align: center;
+  background-color: var(--color-background);
+  transition: background-color 0.3s ease;
+}
+
+.upload-label:hover:not(:disabled) {
+  background-color: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+}
+
+/* Hide default input but keep accessible */
+.upload-input {
+  display: none;
+}
+
+/* Upload Button */
+.upload-button {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  padding: var(--spacing-sm);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+  box-shadow: 0 3px 6px rgba(74, 144, 226, 0.4);
+}
+
+.upload-button:hover:not(:disabled) {
+  background-color: #357ABD; /* Darker blue */
+}
+
+.upload-button:disabled {
+  background-color: #A1C6EA;
+  cursor: not-allowed;
+}

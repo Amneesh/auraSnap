@@ -17,7 +17,6 @@ const UploadForm = ({ onUploadSuccess }) => {
 
     try {
       setUploading(true);
-      // Your backend endpoint matches the handler path /api/upload
       const response = await axios.post(
         'https://aura-snap-backend.vercel.app/api/upload',
         formData,
@@ -28,7 +27,7 @@ const UploadForm = ({ onUploadSuccess }) => {
 
       if (response.status === 200) {
         setFile(null);
-        onUploadSuccess(); // Notify parent to refresh gallery or update state
+        onUploadSuccess();
       } else {
         alert('Upload failed with status: ' + response.status);
       }
@@ -41,14 +40,19 @@ const UploadForm = ({ onUploadSuccess }) => {
   };
 
   return (
-    <form onSubmit={uploadImage}>
+    <form onSubmit={uploadImage} className="upload-form">
+      <label htmlFor="file-upload" className="upload-label">
+        Select Image
+      </label>
       <input
+        id="file-upload"
         type="file"
         onChange={(e) => setFile(e.target.files[0])}
         accept="image/*"
         disabled={uploading}
+        className="upload-input"
       />
-      <button type="submit" disabled={uploading}>
+      <button type="submit" disabled={uploading} className="upload-button">
         {uploading ? 'Uploading...' : 'Upload'}
       </button>
     </form>

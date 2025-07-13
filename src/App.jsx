@@ -1,24 +1,28 @@
-// src/App.jsx
-import React, { useState } from 'react';
-import UploadForm from './component/mediaUpload';
-import Gallery from './component/mediaGallery';
+import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './auth/AuthProvider';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import PrivateRoute from './components/PrivateRoute';
 
-function App() {
-  const [refreshKey, setRefreshKey] = useState(0);
 
-  const handleUploadSuccess = () => {
-    setRefreshKey(prev => prev + 1); // triggers gallery re-fetch
-  };
-
+export default function App() {
   return (
-    <div style={{ padding: 30 }}>
-      <h2>Upload Image</h2>
-      <UploadForm onUploadSuccess={handleUploadSuccess} />
-
-      <h2>Gallery</h2>
-      <Gallery refreshKey={refreshKey} />
-    </div>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          />
+          <Route path="*" element={<Navigate to="/dashboard" replace />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
-
-export default App;
