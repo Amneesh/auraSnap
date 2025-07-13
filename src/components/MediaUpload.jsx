@@ -1,19 +1,60 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+// WebP converter
+const convertToWebP = async (file, quality = 0.8) => {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    image.src = URL.createObjectURL(file);
+    image.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = image.width;
+      canvas.height = image.height;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(image, 0, 0);
+
+      canvas.toBlob(
+        (blob) => {
+          if (!blob) return reject(new Error('WebP conversion failed.'));
+          const webpFile = new File(
+            [blob],
+            `${file.name.split('.')[0]}.webp`,
+            { type: 'image/webp' }
+          );
+          resolve(webpFile);
+        },
+        'image/webp',
+        quality
+      );
+    };
+    image.onerror = (err) => reject(err);
+  });
+};
+
 const UploadForm = ({ onUploadSuccess }) => {
   const [files, setFiles] = useState([]);
 
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     const selectedFiles = Array.from(e.target.files);
 
-    const newFiles = selectedFiles.map((file) => ({
-      file,
-      previewUrl: URL.createObjectURL(file),
-      status: 'pending',
-    }));
+    const processedFiles = await Promise.all(
+      selectedFiles.map(async (file) => {
+        try {
+          const webpFile = await convertToWebP(file); // convert to WebP
+          return {
+            file: webpFile,
+            previewUrl: URL.createObjectURL(webpFile),
+            status: 'pending',
+          };
+        } catch (err) {
+          console.error(`Failed to convert ${file.name}:`, err);
+          return null;
+        }
+      })
+    );
 
-    setFiles((prev) => [...prev, ...newFiles]);
+    const validFiles = processedFiles.filter(Boolean);
+    setFiles((prev) => [...prev, ...validFiles]);
   };
 
   const uploadImages = async (e) => {
@@ -55,6 +96,7 @@ const UploadForm = ({ onUploadSuccess }) => {
           );
         }
       } catch (error) {
+        console.error('Upload error:', error);
         setFiles((prev) =>
           prev.map((f, idx) =>
             idx === i ? { ...f, status: 'error' } : f
