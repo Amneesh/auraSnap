@@ -4,8 +4,8 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../auth/firebase'; // make sure this points to your firebase.js file
 
 export default function Login() {
-  const [email, setEmail] = useState('test@gmail.com');
-  const [password, setPassword] = useState('test123');
+  const [email, setEmail] = useState('fanbhangrede@gmail.com');
+  const [password, setPassword] = useState('fbd@webdevbc');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();

@@ -2,58 +2,109 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const UploadForm = ({ onUploadSuccess }) => {
-  const [file, setFile] = useState(null);
-  const [uploading, setUploading] = useState(false);
+  const [files, setFiles] = useState([]);
 
-  const uploadImage = async (e) => {
+  const handleFileChange = (e) => {
+    const selectedFiles = Array.from(e.target.files);
+
+    const newFiles = selectedFiles.map((file) => ({
+      file,
+      previewUrl: URL.createObjectURL(file),
+      status: 'pending',
+    }));
+
+    setFiles((prev) => [...prev, ...newFiles]);
+  };
+
+  const uploadImages = async (e) => {
     e.preventDefault();
-    if (!file) {
-      alert('Please select a file');
-      return;
-    }
 
-    const formData = new FormData();
-    formData.append('file', file);
+    for (let i = 0; i < files.length; i++) {
+      if (files[i].status === 'uploaded') continue;
 
-    try {
-      setUploading(true);
-      const response = await axios.post(
-        'https://aura-snap-backend.vercel.app/api/upload',
-        formData,
-        {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        }
+      setFiles((prev) =>
+        prev.map((f, idx) =>
+          idx === i ? { ...f, status: 'uploading' } : f
+        )
       );
 
-      if (response.status === 200) {
-        setFile(null);
-        onUploadSuccess();
-      } else {
-        alert('Upload failed with status: ' + response.status);
+      const formData = new FormData();
+      formData.append('file', files[i].file);
+
+      try {
+        const response = await axios.post(
+          'https://aura-snap-backend.vercel.app/api/upload',
+          formData,
+          {
+            headers: { 'Content-Type': 'multipart/form-data' },
+          }
+        );
+
+        if (response.status === 200) {
+          setFiles((prev) =>
+            prev.map((f, idx) =>
+              idx === i ? { ...f, status: 'uploaded' } : f
+            )
+          );
+          onUploadSuccess && onUploadSuccess();
+        } else {
+          setFiles((prev) =>
+            prev.map((f, idx) =>
+              idx === i ? { ...f, status: 'error' } : f
+            )
+          );
+        }
+      } catch (error) {
+        setFiles((prev) =>
+          prev.map((f, idx) =>
+            idx === i ? { ...f, status: 'error' } : f
+          )
+        );
       }
-    } catch (error) {
-      console.error('Upload failed:', error);
-      alert('Upload failed. Please try again.');
-    } finally {
-      setUploading(false);
     }
   };
 
+  const removeFile = (index) => {
+    URL.revokeObjectURL(files[index].previewUrl);
+    setFiles((prev) => prev.filter((_, idx) => idx !== index));
+  };
+
   return (
-    <form onSubmit={uploadImage} className="upload-form">
-      <label htmlFor="file-upload" className="upload-label">
-        Select Image
-      </label>
+    <form onSubmit={uploadImages} className="upload-form">
       <input
-        id="file-upload"
         type="file"
-        onChange={(e) => setFile(e.target.files[0])}
         accept="image/*"
-        disabled={uploading}
+        multiple
+        onChange={handleFileChange}
         className="upload-input"
       />
-      <button type="submit" disabled={uploading} className="upload-button">
-        {uploading ? 'Uploading...' : 'Upload'}
+
+      <div className="preview-container">
+        {files.map(({ previewUrl, status }, index) => (
+          <div key={index} className="preview-item">
+            <img
+              src={previewUrl}
+              alt={`preview-${index}`}
+              className={`preview-image ${status}`}
+            />
+            <button
+              type="button"
+              onClick={() => removeFile(index)}
+              className="preview-remove-button"
+              title="Remove image"
+            >
+              ×
+            </button>
+          </div>
+        ))}
+      </div>
+
+      <button
+        type="submit"
+        disabled={files.length === 0 || files.every(f => f.status === 'uploaded')}
+        className="upload-button"
+      >
+        Upload {files.some(f => f.status === 'uploading') ? '(Uploading...)' : ''}
       </button>
     </form>
   );
