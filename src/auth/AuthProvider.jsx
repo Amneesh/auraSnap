@@ -16,7 +16,10 @@ export function AuthProvider({ children }) {
     return unsubscribe;
   }, []);
 const logout = () => {
+  localStorage.clear();
+
     return signOut(auth);
+
   };
   const isAuthenticated = !!currentUser;
 

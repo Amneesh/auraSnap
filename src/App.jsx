@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState , useEffect} from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './auth/AuthProvider';
 import Login from './pages/Login';
@@ -7,6 +7,12 @@ import PrivateRoute from './components/PrivateRoute';
 
 
 export default function App() {
+  const [code, setCode] = useState('');
+
+  useEffect(() => {
+    const savedCode = localStorage.getItem('code');
+    if (savedCode) setCode(savedCode);
+  }, []);
   return (
     <AuthProvider>
       <BrowserRouter>
@@ -16,7 +22,7 @@ export default function App() {
             path="/dashboard"
             element={
               <PrivateRoute>
-                <Dashboard />
+                <Dashboard code={code}/>
               </PrivateRoute>
             }
           />

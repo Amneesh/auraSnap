@@ -28,3 +28,47 @@
   color: var(--color-text-primary);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+
+.login-page{
+  min-height: 100vh;
+  background-attachment: fixed;
+
+width: 100%;
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.login-container{
+  background-color: rgba(0, 0, 0, 0.66);
+  backdrop-filter: blur(50px);
+  max-width: 500px;
+  padding: 2rem;
+  border-radius: 20px;
+
+  img{
+    width: 80px;
+    height: auto;
+  }
+}
+.login-form-header{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  h2{
+    max-width: 100px;
+  }
+}
+.gallery-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-flow: row wrap;
+}

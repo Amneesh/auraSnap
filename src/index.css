@@ -1,18 +1,19 @@
 /* Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
 
 :root {
-  --color-primary: #4A90E2;
-  --color-secondary: #50E3C2;
-  --color-background: #F5F7FA;
+  --color-primary: #00a499;
+  --color-secondary: #50e3c2;
+  --color-background: #ffffff;
   --color-text-primary: #333333;
   --color-text-secondary: #666666;
-  --color-border: #E1E8ED;
-  --color-error: #E94B3C;
+  --color-border: #e1e8ed;
+  --color-error: #e94b3c;
 
-  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  --font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 
-  --border-radius: 8px;
+  --border-radius: 40px;
 
   --spacing-xs: 8px;
   --spacing-sm: 16px;
@@ -44,7 +45,10 @@ body {
 }
 
 /* Typography */
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   font-weight: 700;
   margin-top: 0;
   color: var(--color-primary);
@@ -67,12 +71,12 @@ p {
 }
 
 /* Buttons */
-button {
+.aurasnap-button {
   background-color: var(--color-primary);
   color: white;
   border: none;
   border-radius: var(--border-radius);
-  padding: var(--spacing-sm) var(--spacing-lg);
+  padding: var(--spacing-xs) var(--spacing-lg);
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
@@ -80,12 +84,12 @@ button {
   box-shadow: 0 3px 6px rgba(74, 144, 226, 0.4);
 }
 
-button:hover:not(:disabled) {
-  background-color: #357ABD; /* Darker blue */
+.aurasnap-button:hover:not(:disabled) {
+  background-color: #009baf; /* Darker blue */
 }
 
-button:disabled {
-  background-color: #A1C6EA;
+.aurasnap-button:disabled {
+  background-color: #a1c6ea;
   cursor: not-allowed;
 }
 
@@ -95,7 +99,7 @@ input[type="email"],
 input[type="password"],
 textarea {
   width: 100%;
-  padding: var(--spacing-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
   margin-bottom: var(--spacing-md);
   font-size: 1rem;
   border: 1px solid var(--color-border);
@@ -119,7 +123,7 @@ form label {
   display: block;
   font-weight: 600;
   margin-bottom: 6px;
-  color: var(--color-text-primary);
+  color: var(--color-background);
 }
 
 /* Error Text */
@@ -131,11 +135,12 @@ form label {
 }
 
 /* Upload Form & Gallery Container */
-.upload-container, .gallery-container {
+.upload-container,
+.gallery-container {
   background: white;
   padding: var(--spacing-md);
   border-radius: var(--border-radius);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   margin-bottom: var(--spacing-lg);
 }
 
@@ -147,18 +152,20 @@ form label {
 }
 
 .gallery-grid img {
-    aspect-ratio: 1/1;
+  aspect-ratio: 1/1;
   width: 100%;
   height: 100%;
   border-radius: var(--border-radius);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   object-fit: cover;
   transition: transform 0.2s ease;
   cursor: pointer;
 }
-
+.gallery-grid-container {
+  max-width: 400px;
+}
 .gallery-grid img:hover {
-  filter:grayscale(1);
+  filter: grayscale(1);
 }
 
 /* Responsive */
@@ -174,15 +181,15 @@ form label {
 /* Delete Button on Image */
 .delete-button {
   position: absolute;
-  width:100%;
+  width: 100%;
   bottom: 0;
-  background: rgba(233, 75, 60, 0.85); /* error red with transparency */
+  background: rgb(233, 75, 60); /* error red with transparency */
   border: none;
   color: white;
   padding: 10px 8px;
   cursor: pointer;
   z-index: 1;
-  border-radius: 4px;
+  border-radius: 0px;
   font-weight: 700;
   font-size: 1rem;
   line-height: 1;
@@ -190,7 +197,7 @@ form label {
 }
 
 .delete-button:hover {
-  background: rgba(233, 75, 60, 1); /* full red on hover */
+  background: rgb(190, 16, 0); /* full red on hover */
 }
 
 /* Gallery image (already partially in the style guide, but here with class) */
@@ -211,7 +218,7 @@ form label {
   border: 1px solid #ddd;
   border-radius: 6px;
   background-color: #fafafa;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   font-family: Arial, sans-serif;
 }
 
@@ -273,10 +280,10 @@ form label {
   position: absolute;
   top: 0;
   right: 0;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   color: white;
   border: none;
-  
+
   width: 100%;
   height: 100%;
   cursor: pointer;

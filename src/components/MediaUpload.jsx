@@ -33,6 +33,8 @@ const convertToWebP = async (file, quality = 0.8) => {
 
 const UploadForm = ({ onUploadSuccess }) => {
   const [files, setFiles] = useState([]);
+  const [code, setCode] = useState(localStorage.getItem('code'));
+
 
   const handleFileChange = async (e) => {
     const selectedFiles = Array.from(e.target.files);
@@ -60,6 +62,7 @@ const UploadForm = ({ onUploadSuccess }) => {
   const uploadImages = async (e) => {
     e.preventDefault();
 
+
     for (let i = 0; i < files.length; i++) {
       if (files[i].status === 'uploaded') continue;
 
@@ -71,10 +74,11 @@ const UploadForm = ({ onUploadSuccess }) => {
 
       const formData = new FormData();
       formData.append('file', files[i].file);
+      // formData.append('bucket', 'rpdevents');
 
       try {
         const response = await axios.post(
-          'https://aura-snap-backend.vercel.app/api/upload',
+          `https://aura-snap-backend.vercel.app/api/upload?bucket=${encodeURIComponent(code)}`,
           formData,
           {
             headers: { 'Content-Type': 'multipart/form-data' },

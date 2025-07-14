@@ -20,7 +20,7 @@ export default function Header() {
 
       <div className="header-right">
     
-        <button className="logout-button" onClick={handleLogout}>
+        <button className="logout-button aurasnap-button" onClick={handleLogout}>
           Logout
         </button>
       </div>
