@@ -33,8 +33,7 @@ const convertToWebP = async (file, quality = 0.8) => {
 
 const UploadForm = ({ onUploadSuccess }) => {
   const [files, setFiles] = useState([]);
-  const [code, setCode] = useState(localStorage.getItem('code'));
-
+  const [code] = useState(localStorage.getItem('code'));
 
   const handleFileChange = async (e) => {
     const selectedFiles = Array.from(e.target.files);
@@ -42,7 +41,7 @@ const UploadForm = ({ onUploadSuccess }) => {
     const processedFiles = await Promise.all(
       selectedFiles.map(async (file) => {
         try {
-          const webpFile = await convertToWebP(file); // convert to WebP
+          const webpFile = await convertToWebP(file);
           return {
             file: webpFile,
             previewUrl: URL.createObjectURL(webpFile),
@@ -62,19 +61,15 @@ const UploadForm = ({ onUploadSuccess }) => {
   const uploadImages = async (e) => {
     e.preventDefault();
 
-
     for (let i = 0; i < files.length; i++) {
       if (files[i].status === 'uploaded') continue;
 
       setFiles((prev) =>
-        prev.map((f, idx) =>
-          idx === i ? { ...f, status: 'uploading' } : f
-        )
+        prev.map((f, idx) => (idx === i ? { ...f, status: 'uploading' } : f))
       );
 
       const formData = new FormData();
       formData.append('file', files[i].file);
-      // formData.append('bucket', 'rpdevents');
 
       try {
         const response = await axios.post(
@@ -108,6 +103,10 @@ const UploadForm = ({ onUploadSuccess }) => {
         );
       }
     }
+
+    // ✅ Clean up previews and clear file list
+    files.forEach((f) => URL.revokeObjectURL(f.previewUrl));
+    setFiles([]);
   };
 
   const removeFile = (index) => {
@@ -147,10 +146,12 @@ const UploadForm = ({ onUploadSuccess }) => {
 
       <button
         type="submit"
-        disabled={files.length === 0 || files.every(f => f.status === 'uploaded')}
+        disabled={
+          files.length === 0 || files.every((f) => f.status === 'uploaded')
+        }
         className="upload-button"
       >
-        Upload {files.some(f => f.status === 'uploading') ? '(Uploading...)' : ''}
+        Upload {files.some((f) => f.status === 'uploading') ? '(Uploading...)' : ''}
       </button>
     </form>
   );
