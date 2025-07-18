@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import UploadForm from '../components/MediaUpload';
 import Gallery from '../components/MediaGallery';
 import Header from '../components/Header';
+import mainImage from '../assets/mainImage.jpg'
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -29,8 +30,9 @@ export default function Dashboard() {
   return (
     <div>
       <Header />
-      <div style={{ padding: 30 }}>
-        <h2>Upload Image</h2>
+      <div>
+
+       
         <UploadForm onUploadSuccess={handleUploadSuccess} code={code} />
         <Gallery refreshKey={refreshKey} code={code} />
       </div>

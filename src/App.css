@@ -1,11 +1,26 @@
 .header-container {
+  position: relative;
+  top: 0;
+
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0rem 2rem;
-  background-color: var(--color-background); /* e.g. white or light */
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  border-bottom: 1px solid var(--color-border);
+  border-radius: 30px;
+backdrop-filter: blur(290px);
+  background-color:#ffffff; /* e.g. white or light */
+  border: 2px dashed var(--color-primary);
+}
+.header-container-wrapper{
+  background-image: url('./assets/mainImage.jpg');
+object-fit: cover;
+background-position: center;
+background-size: cover;
+height: 25rem;
+  z-index: 10;
+  padding: 1rem 1rem;
+
 }
 
 .logo-container {
@@ -15,7 +30,7 @@
 
 .logo {
   height: auto;
-  width: 200px;
+  width: 60px;
 
   
    
@@ -66,9 +81,65 @@ align-items: center;
     max-width: 100px;
   }
 }
+.gallery-page{
+  padding: 2rem 1rem;
+ 
+  background-color: var(--color-secondary);
+  hr{
+    color: var(--color-primary);
+  }
+  h1,h2,h3{
+    color:var(--color-background);
+  }
+}
 .gallery-header{
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-flow: row wrap;
+}
+
+
+
+.custum-file-upload {
+  height: 200px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: space-between;
+  gap: 20px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed var(--color-primary);
+  background-color: var(--primary-white);
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0px 48px 35px -48px var(--color-primary);
+}
+
+.custum-file-upload .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custum-file-upload .icon svg {
+  height: 80px;
+  fill: var(--color-primary);
+}
+
+.custum-file-upload .text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custum-file-upload .text span {
+  font-weight: 400;
+  color: var(--color-primary);
+}
+
+.custum-file-upload input {
+  display: none;
 }

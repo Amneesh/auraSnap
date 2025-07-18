@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/AuthProvider';
-import logo from '../assets/logo.png'; // update the path if needed
+import logo from '../assets/logo-img.png'; // update the path if needed
 
 export default function Header() {
   const { logout } = useAuth();
@@ -13,7 +13,8 @@ export default function Header() {
   };
 
   return (
-    <header className="header-container">
+    <header className="header-container-wrapper">
+      <div className="header-container">
       <div className="logo-container">
         <img src={logo} alt="AuraSnap Logo" className="logo" />
       </div>
@@ -23,6 +24,7 @@ export default function Header() {
         <button className="logout-button aurasnap-button" onClick={handleLogout}>
           Logout
         </button>
+      </div>
       </div>
     </header>
   );
